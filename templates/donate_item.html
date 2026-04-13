@@ -1,0 +1,107 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+<title>Donate Items</title>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+    <style>
+        body {
+            background: url("{{ url_for('static', filename='images/dash_bg3.png') }}") no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+
+<nav class="navbar navbar-dark bg-success">
+<div class="container">
+<span class="navbar-brand">GiveJoy</span>
+<a href="/dashboard" class="btn btn-light btn-sm">Back</a>
+</div>
+</nav>
+
+<div class="container mt-5">
+
+<div class="card shadow p-4 mx-auto" style="max-width:500px">
+
+<h3 class="text-center mb-4">Donate Items</h3>
+
+{% if error %}
+<div class="alert alert-danger text-center">
+    {{ error }}
+</div>
+{% endif %}
+
+<form method="POST">
+
+    <!-- CATEGORY -->
+    <div class="mb-3">
+        <label>Category</label>
+        
+        <select name="category" id="category" class="form-control" required onchange="toggleExpiry()">
+        
+        <option value="">Select Category</option>
+        
+        <option value="Packaged Food">Packaged Food</option>
+        <option value="Clothes">Clothes</option>
+        <option value="Stationery">Stationery</option>
+        <option value="Utensils">Utensils</option>
+        <option value="Bedding">Beddings</option>
+        <option value="Other">Other</option>
+        
+        </select>
+        
+    </div>
+
+    <!-- ITEM NAME -->
+    <div class="mb-3">
+        <label>Item Name</label>
+        <input type="text" name="item_name" class="form-control" required>
+    </div>
+
+    <!-- QUANTITY -->
+    <div class="mb-3">
+        <label>Quantity</label>
+        <input type="number" name="quantity" class="form-control" required>
+    </div>
+
+    <!-- EXPIRY DATE (HIDDEN INITIALLY) -->
+    <div class="mb-3" id="expiryDiv" style="display:none;">
+        <label>Expiry Date</label>
+        <input type="date" name="expiry_date" id="expiry_date" class="form-control">
+    </div>
+
+    <button class="btn btn-success w-100">
+        Submit Donation
+    </button>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+function toggleExpiry() {
+    const category = document.getElementById("category").value;
+    const expiryDiv = document.getElementById("expiryDiv");
+    const expiryInput = document.getElementById("expiry_date");
+
+    if (category === "Packaged Food") {
+        expiryDiv.style.display = "block";
+        expiryInput.required = true;
+    } else {
+        expiryDiv.style.display = "none";
+        expiryInput.required = false;
+        expiryInput.value = "";
+    }
+}
+</script>
+
+</body>
+</html>
